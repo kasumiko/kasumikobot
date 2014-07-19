@@ -3,10 +3,10 @@
 require 'rubygems'
 require 'twitter'
  
-API_KEY = ""
-API_SECRET = ""
-ACCESS_TOKEN = ""
-ACCESS_TOKEN_SECRET =  ""
+API_KEY = "rAm3o82TQj1sAEG1DUbeoT668"
+API_SECRET = "3rNew1xhd9J3iq4slhtopFAFhImjMv8eKwNH1qrETbyqokjgFW"
+ACCESS_TOKEN = "1617849072-eY4gFy0Awq0Z7atIQFNSabqtiRTufFuuyrnKs0W"
+ACCESS_TOKEN_SECRET =  "TVFAvEJds2KdF7hFp3XbFmLgknG5020xPcMXByNE59iQi"
 USERNAME="kasumikobot"
 
 @client = Twitter::REST::Client.new do |config|
