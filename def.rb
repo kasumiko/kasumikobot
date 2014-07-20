@@ -1,7 +1,7 @@
 # encoding: utf-8
 #Tweetする
-def post(post,option)
-@client.update(post,option)
+def post(post,option={})
+@client.update(post,option={})
 end
 
 #favる
@@ -11,7 +11,7 @@ end
 
 #ハピクレ
 def happy(contents,username,status,id)
- if contents =~ /ハッピークレセント|ハピクレ|test/	
+ if contents =~ /ハッピークレセント|ハピクレ/	
   post("#{"@" + username} 永遠ロマンス！#{"\u00A0"*rand(20)}", :in_reply_to_status_id => id)	
   fav(status)
  end
@@ -338,13 +338,40 @@ def cointoss(contents,username,id)
   coin = rand(1..2)
   case coin
    when 1 then
-    post("#{"@" + username} 表です。 #{"\u00A0"*5}" ,:in_reply_to_id => id)
+    post("#{"@" + username} 表です。 #{"\u00A0"*rand(5)}" ,:in_reply_to_id => id)
    when 2 then
-    post("#{"@" + username} 裏です。 #{"\u00A0"*5}" ,:in_reply_to_id => id)
+    post("#{"@" + username} 裏です。 #{"\u00A0"*rand(5)}" ,:in_reply_to_id => id)
   end
  end
 end
 
 #ダイスロール
-#def diceroll(contents,username,id)
-# if diceroll ~= //
+def diceroll(contents,username,id)
+ if contents =~ /\dD\d/
+  dice = contents.gsub(/@kasumikobot |　/,"")
+   time = dice[0,2].to_i
+   number = dice[-1,2].to_i
+  result = 1 + rand(number*time).to_i
+   post("#{"@" + username} #{result.to_i
+}" ,:in_reply_to_id => id)
+ end
+end
+=begin  
+#書き込み
+def writer(contents,username,id)
+ if contents =~ /アニメw/
+  contents = contents.gsub(/@kasumikobot アニメw\n/,"")  
+  content = contents.split(",")
+  data = [username => content]
+  YAML.dump(data, open(File.expand_path('../test1.yml',__FILE__), "a"))
+  post("#{"@"+username} 記憶したよ#{"！"*rand(5)}",:in_reply_to_id => id)
+ end
+end
+#取り出し
+def reader(contents,username,id)
+ if contents =~ /アニメr/
+  data = YAML.load_stream(File.expand_path('../test1.yml',__FILE__))
+  puts data.class.to_s
+ end
+end
+=end

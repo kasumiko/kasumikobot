@@ -1,7 +1,6 @@
 # encoding: utf-8
 require 'twitter'
-require 'tweetstream'
-require './userconf.rb'
+require '~/ドキュメント/kasumikobot/userconf.rb'
 
 
 

@@ -4,11 +4,12 @@ require 'tweetstream'
 require './userconf.rb'
 require './def.rb'
 require './postdata.rb'
+require 'yaml'
 
 myname = @client.user.name
 mes = myname+ " is active..."
 puts mes
-@client.update(mes)
+post(mes)
 
 Streamclient = TweetStream::Client.new
 Streamclient.userstream do |status|
@@ -22,8 +23,7 @@ Streamclient.userstream do |status|
 # str = username + ":" + contents
 # puts str
 
- unless username == "kasumikobot" then
- #or contents.index("RT") then
+ unless username == "kasumikobot" or contents =~ /RT/ then
 
   happy(contents,username,status,id)
   yuyu(contents,username,status,id)
@@ -57,6 +57,8 @@ Streamclient.userstream do |status|
    whoi(contents,username,name,id)
    fav(status)
    cointoss(contents,username,id)
+   diceroll(contents,username,id)
+   writer(contents,username,id)
   end
 
  end
