@@ -26,6 +26,7 @@ def yuyu(contents,username,status,id)
 end
 
 
+=begin
 #ゆいおぐらガチャ(通常)
 def ogura(contents,username,status,id)
  if contents =~ /((ゆい|唯|ユイ|yui|YUI|ﾕｲ|Yui)(Ogura|ｵｸﾞﾗ|オグラ|ogura|おぐら|OGURA|おぐらちゃん|小倉ちゃん|小倉|ゆい|yui|ﾕｲ|Yui)|(Ogura|ｵｸﾞﾗ|ogura|OGURA|おぐら|小倉|オグラ)(Yui|ﾕｲ|ゆい|唯|ユイ|YUI|yui|ゆいちゃん|唯ちゃん|ﾕｲちゃん|ﾕｲﾁｬﾝ)|台乙|台乙先生|ゆい\(\*-v・\)ゆい|唯ちゃん|おぐゆい|だいおつ|だい\(\*-v・\)おつ)(ガチャ|がちゃ|ｶﾞﾁｬ)|がちゃおぐら|EXcmd/
@@ -40,22 +41,42 @@ def ogura(contents,username,status,id)
   end 
  end
 end
+=end
+#newogura
+def ogura(contents,username,status,id)
+ if contents =~ /((ゆい|唯|ユイ|yui|YUI|ﾕｲ|Yui)(Ogura|ｵｸﾞﾗ|オグラ|ogura|おぐら|OGURA|おぐらちゃん|小倉ちゃん|小倉|ゆい|yui|ﾕｲ|Yui)|(Ogura|ｵｸﾞﾗ|ogura|OGURA|おぐら|小倉|オグラ)(Yui|ﾕｲ|ゆい|唯|ユイ|YUI|yui|ゆいちゃん|唯ちゃん|ﾕｲちゃん|ﾕｲﾁｬﾝ)|台乙|台乙先生|ゆい\(\*-v・\)ゆい|唯ちゃん|おぐゆい|だいおつ|だい\(\*-v・\)おつ)(ガチャ|がちゃ|ｶﾞﾁｬ)|がちゃおぐら/
+  dir = Dir.entries("./yui").sample
+  @client.update_with_media("#{"@" + username}", open(File.expand_path("../yui/#{dir}",__FILE__)),:in_reply_to_id => id)
+ end
+end
+
+#ゆいおぐらガチャ(n連)
+def nogura(contents,username,status,id)
+ if contents =~ /(ゆいおぐら).+(連)(ガチャ)/
+  name = contents.gsub(/ゆいおぐら/,"").gsub(/連ガチャ/,"")
+  n=name.to_i
+  if n < 21 then
+   n.times do
+   dir = Dir.entries("./yui").sample
+   @client.update_with_media("#{"@" + username}", open(File.expand_path("../yui/#{dir}",__FILE__)),:in_reply_to_id => id)    
+   end
+  else
+   post("#{"@" + username} そんなにいっぱい出せないよぅ…", :in_reply_to_status_id => id)
+  end
+  fav(status)
+ end
+end
+
 
 #ゆいおぐらガチャ(応援)
 def cheerogura(contents,username,status,id)
  if contents =~ /もう(ダメ|だめ)だ/
-  count = 0
-  fp = open(File.expand_path('../list.txt',__FILE__))
-   while fp.gets
-    count += 1
-   end
-  open(File.expand_path('../list.txt',__FILE__)) do |f|
-   post("#{"@" + username} がんばって！\n" + f.readlines[rand(count)], :in_reply_to_status_id => id)
-   fav(status)
-  end   
+  dir = Dir.entries("./yui").sample
+  @client.update_with_media("#{"@" + username}", open(File.expand_path("../yui/#{dir}",__FILE__)),:in_reply_to_id => id)    
+   fav(status)   
  end
 end 
-
+=begin
 #ゆいおぐらガチャ(n連)
 def nogura(contents,username,status,id)
  if contents =~ /(ゆいおぐら).+(連)(ガチャ)/
@@ -78,7 +99,7 @@ def nogura(contents,username,status,id)
   fav(status)
  end
 end
-
+=end
 #出席ガチャ
 def attend(contents,username,status,id,name)
  if contents =~ /(出席|欠席)(ガチャ|がちゃ)/
@@ -274,14 +295,6 @@ def fx(contents,username,id,status)
  if contents =~ /の顔が見たいよ/
   @client.update_with_media("#{"@" + username}", open(File.expand_path("../pic#{rand(1..2)}.png",__FILE__)), :in_reply_to_id => id)
   fav(status)
- end
-end
-
-#newogura
-def newogura(contents,username,id)
- if contents =~ /newogura/
-  dir = Dir.entries("./yui").sample
-  @client.update_with_media("#{"@" + username}", open(File.expand_path("../yui/#{dir}",__FILE__)),:in_reply_to_id => id)
  end
 end
 
