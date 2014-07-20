@@ -277,6 +277,14 @@ def fx(contents,username,id,status)
  end
 end
 
+#newogura
+def newogura(contents,username,id)
+ if contents =~ /newogura/
+  dir = Dir.entries("./yui").sample
+  @client.update_with_media("#{"@" + username}", open(File.expand_path("../yui/#{dir}",__FILE__)),:in_reply_to_id => id)
+ end
+end
+
 #あいさつ
 def greet(contents,username,name,id,status)
  if contents =~ /おはよう|起きた|おはよー/

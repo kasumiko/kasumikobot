@@ -48,7 +48,8 @@ Streamclient.userstream do |status|
   answer(contents,status,username,myname,id)
   fx(contents,username,id,status)
   greet(contents,username,name,id,status) 
- 
+  newogura(contents,username,id)
+
   if /@kasumikobot/.match(status.text) #自分へのメンションであれば
    suddenly(contents,username,id,status)
    lmf(contents,username,id,status)
