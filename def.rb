@@ -46,7 +46,8 @@ end
 def ogura(contents,username,status,id)
  if contents =~ /((ゆい|唯|ユイ|yui|YUI|ﾕｲ|Yui)(Ogura|ｵｸﾞﾗ|オグラ|ogura|おぐら|OGURA|おぐらちゃん|小倉ちゃん|小倉|ゆい|yui|ﾕｲ|Yui)|(Ogura|ｵｸﾞﾗ|ogura|OGURA|おぐら|小倉|オグラ)(Yui|ﾕｲ|ゆい|唯|ユイ|YUI|yui|ゆいちゃん|唯ちゃん|ﾕｲちゃん|ﾕｲﾁｬﾝ)|台乙|台乙先生|ゆい\(\*-v・\)ゆい|唯ちゃん|おぐゆい|だいおつ|だい\(\*-v・\)おつ)(ガチャ|がちゃ|ｶﾞﾁｬ)|がちゃおぐら/
   dir = Dir.entries("./yui").sample
-  @client.update_with_media("#{"@" + username}", open(File.expand_path("../yui/#{dir}",__FILE__)),:in_reply_to_id => id)
+  @client.update_with_media("#{"@" + username}", open(File.expand_path("../yui/#{dir}",__FILE__)),:in_reply_to_status_id => id)
+ fav(status)
  end
 end
 
@@ -58,10 +59,10 @@ def nogura(contents,username,status,id)
   if n < 21 then
    n.times do
    dir = Dir.entries("./yui").sample
-   @client.update_with_media("#{"@" + username}", open(File.expand_path("../yui/#{dir}",__FILE__)),:in_reply_to_id => id)    
+   @client.update_with_media("#{"@" + username}", open(File.expand_path("../yui/#{dir}",__FILE__)),:in_reply_to_status_id => id)    
    end
   else
-   post("#{"@" + username} そんなにいっぱい出せないよぅ…", :in_reply_to_status_id => id)
+   post("#{"@" + username} そんなにいっぱい出せないよぅ…#{"\u00A0"*rand(5)}", :in_reply_to_status_id => id)
   end
   fav(status)
  end
@@ -72,7 +73,7 @@ end
 def cheerogura(contents,username,status,id)
  if contents =~ /もう(ダメ|だめ)だ/
   dir = Dir.entries("./yui").sample
-  @client.update_with_media("#{"@" + username}", open(File.expand_path("../yui/#{dir}",__FILE__)),:in_reply_to_id => id)    
+  @client.update_with_media("#{"@" + username}", open(File.expand_path("../yui/#{dir}",__FILE__)),:in_reply_to_status_id => id)    
    fav(status)   
  end
 end 
@@ -100,6 +101,16 @@ def nogura(contents,username,status,id)
  end
 end
 =end
+
+#野中藍ガチャ
+def aipon(contents,username,status,id)
+ if contents =~ /((のなか|あい|野中|藍)(のなか|あい|野中|藍)|あいぽん)ガチャ/
+  dir = Dir.entries("./aipon").sample
+  @client.update_with_media("#{"@" + username}", open(File.expand_path("../aipon/#{dir}",__FILE__)),:in_reply_to_status_id => id)
+ fav(status)
+ end
+end
+
 #出席ガチャ
 def attend(contents,username,status,id,name)
  if contents =~ /(出席|欠席)(ガチャ|がちゃ)/
@@ -224,6 +235,7 @@ end
 def rimfire(contents,username,status,id)
  if contents =~ /(Let's|let's) (fly|Fly) (now|Now)/
   post("#{"@" + username} Let's try now#{"！" * rand(1..10)}", :in_reply_to_status_id => id)
+ fav(status)
  end
 end
 
@@ -265,13 +277,14 @@ def namechange(contents,username,status,id)
   if name.length > 20 then
    name = name[0,20]
    @client.update_profile(name: "#{name}")
-   post("#{"@" + username} 今から俺の名前は#{name}だ！", :in_reply_to_id => id)
+   post("#{"@" + username} 今から俺の名前は#{name}だ！", :in_reply_to_status_id => id)
   elsif name.length == 1 then
-   post("#{"@" + username} 短すぎるよぉ…", :in_reply_to_id => id)
+   post("#{"@" + username} 短すぎるよぉ…", :in_reply_to_status_id => id)
   else
    @client.update_profile(name: "#{name}")
-   post("#{"@" + username} 今から俺の名前は#{name}だ！", :in_reply_to_id => id)
+   post("#{"@" + username} 今から俺の名前は#{name}だ！", :in_reply_to_status_id => id)
   end
+  fav(status)
  end
 end	
 
@@ -285,7 +298,7 @@ end
 #"現在の名前"に反応して、"はい"とリプライを返す
 def answer(contents,status,username,myname,id)
  if contents =~ /#{myname}|かすかたんbot/
-  post("#{"@" + username} はい#{"\u00A0"*rand(10)}", :in_reply_to_id => id)
+  post("#{"@" + username} はい#{"\u00A0"*rand(10)}", :in_reply_to_status_id => id)
   fav(status)	
  end
 end
@@ -293,7 +306,7 @@ end
 #人の顔が見たい
 def fx(contents,username,id,status)
  if contents =~ /の顔が見たいよ/
-  @client.update_with_media("#{"@" + username}", open(File.expand_path("../pic#{rand(1..2)}.png",__FILE__)), :in_reply_to_id => id)
+  @client.update_with_media("#{"@" + username}", open(File.expand_path("../pic#{rand(1..2)}.png",__FILE__)), :in_reply_to_status_id => id)
   fav(status)
  end
 end
@@ -302,12 +315,12 @@ end
 def greet(contents,username,name,id,status)
  if contents =~ /おはよう|起きた|おはよー/
   morn = ["おっはよ〜", "おはよー", "おはようございます", "おはよう", "おはよーございまーす", "おはよ〜"]
-  post("@" + username + " " + morn.sample+"！ " + name + "さん！",:in_reply_to_id => id)
+  post("@" + username + " " + morn.sample+"！ " + name + "さん！",:in_reply_to_status_id => id)
   fav(status)
  end
  if contents =~ /寝る|おやすみ/
   morn = ["おやすみ〜", "おやすみ", "おやすみなさい", "おやすみです", "今日はもう寝るんですか？", "また明日"]
-  post("@" + username + " " + morn.sample+"！ " + name + "さん！",:in_reply_to_id => id)
+  post("@" + username + " " + morn.sample+"！ " + name + "さん！",:in_reply_to_status_id => id)
   fav(status)	
  end
 end
@@ -319,6 +332,7 @@ def suddenly(contents,username,id,status)
   n = moji.chomp.bytesize
   w = n/2
   post("#{"@" + username } \n＿#{"人"*w}＿\n＞#{moji}＜\n￣#{"Y^"*w}￣\n", :in_reply_to_status_id => id)
+ fav(status)
  end
 end
 
@@ -359,9 +373,9 @@ def cointoss(contents,username,id)
   coin = rand(1..2)
   case coin
    when 1 then
-    post("#{"@" + username} 表です。 #{"\u00A0"*rand(5)}" ,:in_reply_to_id => id)
+    post("#{"@" + username} 表です。 #{"\u00A0"*rand(5)}" ,:in_reply_to_status_id => id)
    when 2 then
-    post("#{"@" + username} 裏です。 #{"\u00A0"*rand(5)}" ,:in_reply_to_id => id)
+    post("#{"@" + username} 裏です。 #{"\u00A0"*rand(5)}" ,:in_reply_to_status_id => id)
   end
  end
 end
@@ -374,7 +388,7 @@ def diceroll(contents,username,id)
    number = dice[-1,2].to_i
   result = 1 + rand(number*time).to_i
    post("#{"@" + username} #{result.to_i
-}" ,:in_reply_to_id => id)
+}" ,:in_reply_to_status_id => id)
  end
 end
 =begin  
@@ -385,7 +399,7 @@ def writer(contents,username,id)
   content = contents.split(",")
   data = [username => content]
   YAML.dump(data, open(File.expand_path('../test1.yml',__FILE__), "a"))
-  post("#{"@"+username} 記憶したよ#{"！"*rand(5)}",:in_reply_to_id => id)
+  post("#{"@"+username} 記憶したよ#{"！"*rand(5)}",:in_reply_to_status_id => id)
  end
 end
 #取り出し

@@ -48,6 +48,7 @@ Streamclient.userstream do |status|
   answer(contents,status,username,myname,id)
   fx(contents,username,id,status)
   greet(contents,username,name,id,status) 
+  aipon(contents,username,status,id)
 
   if /@kasumikobot/.match(status.text) #自分へのメンションであれば
    suddenly(contents,username,id,status)
