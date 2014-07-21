@@ -27,7 +27,7 @@ Streamclient.userstream do |status|
  unless username == "kasumikobot" or contents =~ /RT/ then
 
   happy(contents,username,status,id)
-  yuyu(contents,username,status,id)
+#  yuyu(contents,username,status,id)
   ogura(contents,username,status,id)
   cheerogura(contents,username,status,id)
   nogura(contents,username,status,id)
@@ -59,8 +59,8 @@ Streamclient.userstream do |status|
    whoi(contents,username,name,id)
    fav(status)
    cointoss(contents,username,id)
-   diceroll(contents,username,id)
-   writer(contents,username,id)
+#   diceroll(contents,username,id)
+#   writer(contents,username,id)
   end
 
  end
