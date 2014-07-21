@@ -46,9 +46,9 @@ def nogura(contents,username,status,id)
   name = contents.gsub(/ゆいおぐら/,"").gsub(/連ガチャ/,"")
   n=name.to_i
   if n < 21 then
+  actor = "yui"   
    n.times do
-   dir = Dir.entries("./yui").sample
-   @client.update_with_media("#{"@" + username}", open(File.expand_path("../yui/#{dir}",__FILE__)),:in_reply_to_status_id => id)    
+   sayyou(actor,username,id,status) 
    end
   else
    post("#{"@" + username} そんなにいっぱい出せないよぅ…#{"\u00A0"*rand(5)}", :in_reply_to_status_id => id)
@@ -62,7 +62,7 @@ end
 def cheerogura(contents,username,status,id)
  if contents =~ /もう(ダメ|だめ)だ/
   dir = Dir.entries("./yui").sample
-  @client.update_with_media("#{"@" + username}", open(File.expand_path("../yui/#{dir}",__FILE__)),:in_reply_to_status_id => id)    
+  @client.update_with_media("#{"@" + username がんばって！}", open(File.expand_path("../yui/#{dir}",__FILE__)),:in_reply_to_status_id => id)    
    fav(status)   
  end
 end 
@@ -70,9 +70,8 @@ end
 #野中藍ガチャ
 def aipon(contents,username,status,id)
  if contents =~ /((のなか|あい|野中|藍)(のなか|あい|野中|藍)|あいぽん)ガチャ/
-  dir = Dir.entries("./aipon").sample
-  @client.update_with_media("#{"@" + username}", open(File.expand_path("../aipon/#{dir}",__FILE__)),:in_reply_to_status_id => id)
- fav(status)
+  actor = "aipon"
+  sayyou(actor,username,id,status)
  end
 end
 
