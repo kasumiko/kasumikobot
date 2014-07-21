@@ -62,7 +62,7 @@ end
 def cheerogura(contents,username,status,id)
  if contents =~ /もう(ダメ|だめ)だ/
   dir = Dir.entries("./yui").sample
-  @client.update_with_media("#{"@" + username がんばって！}", open(File.expand_path("../yui/#{dir}",__FILE__)),:in_reply_to_status_id => id)    
+  @client.update_with_media("#{"@" + username} がんばって！", open(File.expand_path("../yui/#{dir}",__FILE__)),:in_reply_to_status_id => id)    
    fav(status)   
  end
 end 
