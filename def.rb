@@ -25,29 +25,18 @@ def yuyu(contents,username,status,id)
  end
 end
 
-
-=begin
-#ゆいおぐらガチャ(通常)
-def ogura(contents,username,status,id)
- if contents =~ /((ゆい|唯|ユイ|yui|YUI|ﾕｲ|Yui)(Ogura|ｵｸﾞﾗ|オグラ|ogura|おぐら|OGURA|おぐらちゃん|小倉ちゃん|小倉|ゆい|yui|ﾕｲ|Yui)|(Ogura|ｵｸﾞﾗ|ogura|OGURA|おぐら|小倉|オグラ)(Yui|ﾕｲ|ゆい|唯|ユイ|YUI|yui|ゆいちゃん|唯ちゃん|ﾕｲちゃん|ﾕｲﾁｬﾝ)|台乙|台乙先生|ゆい\(\*-v・\)ゆい|唯ちゃん|おぐゆい|だいおつ|だい\(\*-v・\)おつ)(ガチャ|がちゃ|ｶﾞﾁｬ)|がちゃおぐら|EXcmd/
-  count = 0
-  fp = open(File.expand_path('../list.txt',__FILE__))
-   while fp.gets
-    count += 1
-   end
-  open(File.expand_path('../list.txt',__FILE__)) do |f|
-   post("#{"@" + username} " + f.readlines[rand(count)], :in_reply_to_status_id => id)
-   fav(status)
-  end 
- end
+#声優ガチャ
+def sayyou(actor,username,id,status)
+ dir = Dir.entries("./#{actor}").sample
+ @client.update_with_media("#{"@" + username}", open(File.expand_path("../#{actor}/#{dir}",__FILE__)),:in_reply_to_status_id => id)
+ fav(status)
 end
-=end
-#newogura
+
+#ゆいおぐらガチャ
 def ogura(contents,username,status,id)
  if contents =~ /((ゆい|唯|ユイ|yui|YUI|ﾕｲ|Yui)(Ogura|ｵｸﾞﾗ|オグラ|ogura|おぐら|OGURA|おぐらちゃん|小倉ちゃん|小倉|ゆい|yui|ﾕｲ|Yui)|(Ogura|ｵｸﾞﾗ|ogura|OGURA|おぐら|小倉|オグラ)(Yui|ﾕｲ|ゆい|唯|ユイ|YUI|yui|ゆいちゃん|唯ちゃん|ﾕｲちゃん|ﾕｲﾁｬﾝ)|台乙|台乙先生|ゆい\(\*-v・\)ゆい|唯ちゃん|おぐゆい|だいおつ|だい\(\*-v・\)おつ)(ガチャ|がちゃ|ｶﾞﾁｬ)|がちゃおぐら/
-  dir = Dir.entries("./yui").sample
-  @client.update_with_media("#{"@" + username}", open(File.expand_path("../yui/#{dir}",__FILE__)),:in_reply_to_status_id => id)
- fav(status)
+  actor = "yui"
+  sayyou(actor,username,id,status)
  end
 end
 
@@ -77,30 +66,6 @@ def cheerogura(contents,username,status,id)
    fav(status)   
  end
 end 
-=begin
-#ゆいおぐらガチャ(n連)
-def nogura(contents,username,status,id)
- if contents =~ /(ゆいおぐら).+(連)(ガチャ)/
-  count = 0
-  fp = open(File.expand_path('../list.txt',__FILE__))
-   while fp.gets
-    count += 1
-   end
-  name = contents.gsub(/ゆいおぐら/,"").gsub(/連ガチャ/,"")
-  n=name.to_i
-  if n < 21 then
-   n.times do
-    open(File.expand_path('../list.txt',__FILE__)) do |f|
-     post("#{"@" + username} " + f.readlines[rand(count)], :in_reply_to_status_id => id)
-    end
-   end
-  else
-   post("#{"@" + username} そんなにいっぱい出せないよぅ…", :in_reply_to_status_id => id)
-  end
-  fav(status)
- end
-end
-=end
 
 #野中藍ガチャ
 def aipon(contents,username,status,id)

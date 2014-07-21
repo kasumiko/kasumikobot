@@ -15,7 +15,7 @@ hoge = (deadline - now)
   hour = (hoge-(day.to_i*24*60*60))/(60*60)
   min = (hoge-day.to_i*24*60*60-hour.to_i*60*60)/60
  if day>0
-  @client.update("応用理工学実験レポートの締め切りまであと#{day.to_int}日#{hour.to_int}時間#{min.to_int}分です.")
+  @client.update("応用理工学実験レポートの締め切りまであと#{day.to_int}日です.")
  end
  if day==0
   if hour>0

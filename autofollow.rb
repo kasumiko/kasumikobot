@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 require 'rubygems'
 require 'twitter'
+require 'tweetstream'
 require '~/document/kasumikobot/userconf.rb'
  
 follower_ids = []

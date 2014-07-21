@@ -1,6 +1,7 @@
 #!/usr/local/bin/ruby -Ku
 # -*- coding: utf-8 -*-
 require "twitter"
+require "tweetstream"
 require '~/document/kasumikobot/userconf.rb'
 
 t=Time.now

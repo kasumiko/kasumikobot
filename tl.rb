@@ -19,6 +19,7 @@ Streamclient.userstream do |status|
  id = status.id
  name = status.user.name	
  locate = status.user.location
+ myname = @client.user.name
 
 # str = username + ":" + contents
 # puts str
