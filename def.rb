@@ -39,16 +39,17 @@ def ogura(contents,username,status,id)
   sayyou(actor,username,id,status)
  end
 end
-
+=begin
 #ゆいおぐらガチャ(n連)
 def nogura(contents,username,status,id)
  if contents =~ /(ゆいおぐら).+(連)(ガチャ)/
   name = contents.gsub(/ゆいおぐら/,"").gsub(/連ガチャ/,"")
+  actor="yui"
   n=name.to_i
   if n < 21 then
-  actor = "yui"   
+   dir = Dir.entries("./#{actor}").sample
    n.times do
-   sayyou(actor,username,id,status) 
+   @client.update_with_media("#{"@" + username}", open(File.expand_path("../#{actor}/#{dir}",__FILE__)),:in_reply_to_status_id => id)
    end
   else
    post("#{"@" + username} そんなにいっぱい出せないよぅ…#{"\u00A0"*rand(5)}", :in_reply_to_status_id => id)
@@ -56,7 +57,7 @@ def nogura(contents,username,status,id)
   fav(status)
  end
 end
-
+=end
 
 #ゆいおぐらガチャ(応援)
 def cheerogura(contents,username,status,id)

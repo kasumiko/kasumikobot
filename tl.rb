@@ -30,7 +30,7 @@ Streamclient.userstream do |status|
 #  yuyu(contents,username,status,id)
   ogura(contents,username,status,id)
   cheerogura(contents,username,status,id)
-  nogura(contents,username,status,id)
+#  nogura(contents,username,status,id)
   attend(contents,username,status,id,name)
   kaska(contents,username,status,id)
   yumehikari(contents,username,status,id)
