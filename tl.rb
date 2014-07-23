@@ -3,8 +3,6 @@ require 'twitter'
 require 'tweetstream'
 require './userconf.rb'
 require './def.rb'
-require './postdata.rb'
-require 'yaml'
 
 myname = @client.user.name
 mes = myname+ " is active..."
@@ -19,7 +17,7 @@ Streamclient.userstream do |status|
  id = status.id
  name = status.user.name	
  locate = status.user.location
- myname = @client.user.name
+
 
 # str = username + ":" + contents
 # puts str
@@ -30,7 +28,7 @@ Streamclient.userstream do |status|
 #  yuyu(contents,username,status,id)
   ogura(contents,username,status,id)
   cheerogura(contents,username,status,id)
-#  nogura(contents,username,status,id)
+  nogura(contents,username,status,id)
   attend(contents,username,status,id,name)
   kaska(contents,username,status,id)
   yumehikari(contents,username,status,id)
@@ -43,10 +41,10 @@ Streamclient.userstream do |status|
   rimfire(contents,username,status,id)
   rodeo(contents,username,status,id)
   nandemo(contents,username,status,id)
-  #yo
+#  yo
   namechange(contents,username,status,id)
   favre(contents,status)
-  answer(contents,status,username,myname,id)
+  answer(contents,status,username,id)
   fx(contents,username,id,status)
   greet(contents,username,name,id,status) 
   aipon(contents,username,status,id)
@@ -61,6 +59,7 @@ Streamclient.userstream do |status|
    cointoss(contents,username,id)
 #   diceroll(contents,username,id)
 #   writer(contents,username,id)
+#   pi(contents,username,id)
   end
 
  end

@@ -17,29 +17,16 @@ def happy(contents,username,status,id)
  end
 end
 
-#ゆゆ式は神アニメ
-def yuyu(contents,username,status,id)
- if contents =~ /ゆゆ式/
-  post("#{"@" + username} ゆゆ式は神アニメ "+"\u00A0"*rand(20), :in_reply_to_status_id => id)
-  fav(status)
- end
-end
-
-#声優ガチャ
-def sayyou(actor,username,id,status)
- dir = Dir.entries("./#{actor}").sample
- @client.update_with_media("#{"@" + username}", open(File.expand_path("../#{actor}/#{dir}",__FILE__)),:in_reply_to_status_id => id)
- fav(status)
-end
-
 #ゆいおぐらガチャ
 def ogura(contents,username,status,id)
  if contents =~ /((ゆい|唯|ユイ|yui|YUI|ﾕｲ|Yui)(Ogura|ｵｸﾞﾗ|オグラ|ogura|おぐら|OGURA|おぐらちゃん|小倉ちゃん|小倉|ゆい|yui|ﾕｲ|Yui)|(Ogura|ｵｸﾞﾗ|ogura|OGURA|おぐら|小倉|オグラ)(Yui|ﾕｲ|ゆい|唯|ユイ|YUI|yui|ゆいちゃん|唯ちゃん|ﾕｲちゃん|ﾕｲﾁｬﾝ)|台乙|台乙先生|ゆい\(\*-v・\)ゆい|唯ちゃん|おぐゆい|だいおつ|だい\(\*-v・\)おつ)(ガチャ|がちゃ|ｶﾞﾁｬ)|がちゃおぐら/
   actor = "yui"
-  sayyou(actor,username,id,status)
+  dir = Dir.entries("./#{actor}").sample
+  @client.update_with_media("#{"@" + username}", open(File.expand_path("../#{actor}/#{dir}",__FILE__)),:in_reply_to_status_id => id)
+  fav(status)
  end
 end
-=begin
+
 #ゆいおぐらガチャ(n連)
 def nogura(contents,username,status,id)
  if contents =~ /(ゆいおぐら).+(連)(ガチャ)/
@@ -47,9 +34,9 @@ def nogura(contents,username,status,id)
   actor="yui"
   n=name.to_i
   if n < 21 then
-   dir = Dir.entries("./#{actor}").sample
+   dir = Dir.entries("./#{actor}")
    n.times do
-   @client.update_with_media("#{"@" + username}", open(File.expand_path("../#{actor}/#{dir}",__FILE__)),:in_reply_to_status_id => id)
+   @client.update_with_media("#{"@" + username}", open(File.expand_path("../#{actor}/#{dir.sample}",__FILE__)),:in_reply_to_status_id => id)
    end
   else
    post("#{"@" + username} そんなにいっぱい出せないよぅ…#{"\u00A0"*rand(5)}", :in_reply_to_status_id => id)
@@ -57,7 +44,6 @@ def nogura(contents,username,status,id)
   fav(status)
  end
 end
-=end
 
 #ゆいおぐらガチャ(応援)
 def cheerogura(contents,username,status,id)
@@ -72,7 +58,9 @@ end
 def aipon(contents,username,status,id)
  if contents =~ /((のなか|あい|野中|藍)(のなか|あい|野中|藍)|あいぽん)ガチャ/
   actor = "aipon"
-  sayyou(actor,username,id,status)
+  dir = Dir.entries("./#{actor}").sample
+  @client.update_with_media("#{"@" + username}", open(File.expand_path("../#{actor}/#{dir}",__FILE__)),:in_reply_to_status_id => id)
+  fav(status)
  end
 end
 
@@ -261,8 +249,8 @@ def favre(contents,status)
 end
 	
 #"現在の名前"に反応して、"はい"とリプライを返す
-def answer(contents,status,username,myname,id)
- if contents =~ /#{myname}|かすかたんbot/
+def answer(contents,status,username,id)
+ if contents =~ /かすかたんbot/
   post("#{"@" + username} はい#{"\u00A0"*rand(10)}", :in_reply_to_status_id => id)
   fav(status)	
  end
@@ -375,3 +363,4 @@ def reader(contents,username,id)
  end
 end
 =end
+
