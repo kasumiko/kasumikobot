@@ -17,13 +17,18 @@ def happy(contents,username,status,id)
  end
 end
 
+#声優ガチャ
+def sayyou(actor,username,id,status)
+ dir = Dir.entries("./#{actor}").sample
+ @client.update_with_media("#{"@" + username}", open(File.expand_path("../#{actor}/#{dir}",__FILE__)),:in_reply_to_status_id => id)
+ fav(status)
+end
+
 #ゆいおぐらガチャ
 def ogura(contents,username,status,id)
  if contents =~ /((ゆい|唯|ユイ|yui|YUI|ﾕｲ|Yui)(Ogura|ｵｸﾞﾗ|オグラ|ogura|おぐら|OGURA|おぐらちゃん|小倉ちゃん|小倉|ゆい|yui|ﾕｲ|Yui)|(Ogura|ｵｸﾞﾗ|ogura|OGURA|おぐら|小倉|オグラ)(Yui|ﾕｲ|ゆい|唯|ユイ|YUI|yui|ゆいちゃん|唯ちゃん|ﾕｲちゃん|ﾕｲﾁｬﾝ)|台乙|台乙先生|ゆい\(\*-v・\)ゆい|唯ちゃん|おぐゆい|だいおつ|だい\(\*-v・\)おつ)(ガチャ|がちゃ|ｶﾞﾁｬ)|がちゃおぐら/
   actor = "yui"
-  dir = Dir.entries("./#{actor}").sample
-  @client.update_with_media("#{"@" + username}", open(File.expand_path("../#{actor}/#{dir}",__FILE__)),:in_reply_to_status_id => id)
-  fav(status)
+ sayyou(actor,username,id,status))
  end
 end
 
@@ -58,9 +63,7 @@ end
 def aipon(contents,username,status,id)
  if contents =~ /((のなか|あい|野中|藍)(のなか|あい|野中|藍)|あいぽん)ガチャ/
   actor = "aipon"
-  dir = Dir.entries("./#{actor}").sample
-  @client.update_with_media("#{"@" + username}", open(File.expand_path("../#{actor}/#{dir}",__FILE__)),:in_reply_to_status_id => id)
-  fav(status)
+ sayyou(actor,username,id,status)
  end
 end
 
