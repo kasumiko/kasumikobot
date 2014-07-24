@@ -287,7 +287,7 @@ def suddenly(contents,username,id,status)
   moji = contents.gsub(/@kasumikobot|　|suddenly|\s/,"")
   n = moji.chomp.bytesize
   w = n/2
-  post("#{"@" + username } \n＿#{"人"*w}＿\n＞#{moji}＜\n￣#{"Y^"*w}￣\n", :in_reply_to_status_id => id)
+  post("#{"@" + username } \n＿#{"人"*w}＿\n＞　#{moji}　＜\n￣#{"Y^"*w}￣\n", :in_reply_to_status_id => id)
  fav(status)
  end
 end
@@ -367,3 +367,17 @@ def reader(contents,username,id)
 end
 =end
 
+#ｾｯｸｽ
+def sex(contents,username,id,status)
+ if contents =~ /ｾｯ/
+  arr = ["ｸｽ","ﾌﾟｸ","ｶｲ","ｺｳ","ｸﾂ","ﾍﾟﾝ","ﾃﾝ","ｹﾝ"]
+  post(arr.sample+" RT @"+username+": "+contents,:in_reply_to_status_id => id)
+ end
+end
+
+#ゆれ
+def earthquake(contents,username,status)
+ if contents =~ /ゆれ/
+  post("ウーッ！ウーッ！ウーッ！ 緊急事態発生！緊急事態発生！ 直ちにちんちんを格納してください！ ウーッ！ウーッ！ウーッ！ 緊急事態発生！緊急事態発生！ 直ちにちんちんを格納してください！ ウーッ！ウーッ！ウーッ！")
+ end
+end
