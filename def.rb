@@ -4,6 +4,12 @@ def post(post,option={})
 @client.update(post,option={})
 end
 
+#replyする
+def reply(post,id)
+@client.update(post,:in_reply_to_status_id => id)
+end
+
+
 #favる
 def fav(status)
 @client.favorite(status)
@@ -12,7 +18,7 @@ end
 #ハピクレ
 def happy(contents,username,status,id)
  if contents =~ /ハッピークレセント|ハピクレ/	
-  post("#{"@" + username} 永遠ロマンス！#{"\u00A0"*rand(20)}", :in_reply_to_status_id => id)	
+  reply("#{"@" + username} 永遠ロマンス！#{"\u00A0"*rand(20)}",id)	
   fav(status)
  end
 end
@@ -44,7 +50,7 @@ def nogura(contents,username,status,id)
    @client.update_with_media("#{"@" + username}", open(File.expand_path("../#{actor}/#{dir.sample}",__FILE__)),:in_reply_to_status_id => id)
    end
   else
-   post("#{"@" + username} そんなにいっぱい出せないよぅ…#{"\u00A0"*rand(5)}", :in_reply_to_status_id => id)
+   reply("#{"@" + username} そんなにいっぱい出せないよぅ…#{"\u00A0"*rand(5)}",id)
   end
   fav(status)
  end
@@ -73,7 +79,7 @@ def attend(contents,username,status,id,name)
   pro = rand(1..100)
   case pro
    when 1..4 then
-    post("#{"@" + username}\n  #{name+"は留年です！\n来年も頑張りましょう！"}", :in_reply_to_status_id => id)
+    reply("#{"@" + username}\n  #{name+"は留年です！\n来年も頑張りましょう！"}",id)
    when 5..100 then
     ans = ""
     ress = ""
@@ -88,7 +94,7 @@ def attend(contents,username,status,id,name)
       result = "\n #{x+1}限  " + ress.to_s
       ans += result
      }
-    post("#{"@" + username}\n  #{name+"の今日の出席"} " + ans.to_s + "です。\n今日も一日がんばりましょう！", :in_reply_to_status_id => id)
+    reply("#{"@" + username}\n  #{name+"の今日の出席"} " + ans.to_s + "です。\n今日も一日がんばりましょう！",id)
    end
   fav(status)
  end
@@ -97,7 +103,7 @@ end
 #"かすかたんガチャ"に反応して怒る
 def kaska(contents,username,status,id)
  if contents =~ /かすかたんガチャ/
-  post("#{"@" + username} うっせーばーか#{"！" * rand(1..10)}", :in_reply_to_status_id => id)
+  reply("#{"@" + username} うっせーばーか#{"！" * rand(1..10)}",id)
   fav(status)
  end
 end
@@ -122,7 +128,7 @@ end
 def arcana(contents,username,status,id,name)
  if contents =~ /今日のアルカナ/
   arcana = ["愚者-The FOOL-", "魔術師-The MAGICIAN-", "女教皇-The HIGHPRIESTESS-", "女帝-The EMPRESS-", "皇帝-The EMPEROR-", "法王-The HIEROPHANT-", "恋愛-The LOVERS-", "戦車-The CHARIOT-", "正義-The JUSTICE-", "隠者-The HERMIT-", "運命-The WHEEL OF FORTUNE-", "剛毅-The STRENGTH-", "刑死者-The HANGEDMAN-", "死神-The DEATH-", "節制-The TEMPERANCE-", "悪魔-The DEVIL-", "塔-The TOWER-", "星-The STAR-", "月-The MOON-", "太陽-The SUN-", "審判-The JUDGEMENT-", "世界-The WORLD-", "永劫-The AEON-", "道化師-The JOKER-", "欲望-The DESIRE-"]
-  post("#{"@" + username} " + name +"さんのアルカナは #{arcana.sample} です。", :in_reply_to_status_id => id)
+  reply("#{"@" + username} " + name +"さんのアルカナは #{arcana.sample} です。",id)
   fav(status)
  end
 end
@@ -130,7 +136,7 @@ end
 #"たかまり"に反応して、一日ワンチャンアシカﾓﾉﾏﾈチャンスを返す
 def raise(contents,username,status,id)
  if contents =~ /たかまる|ﾀｶﾏﾙ|タカマル|高まる/
-  post("#{"@" + username} ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ ﾀ゛ｶ゛ﾏ゛ﾙ゛ #一日ワンチャンアシカﾓﾉﾏﾈチャンス", :in_reply_to_status_id => id)
+  reply("#{"@" + username} ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ｱ゛ ﾀ゛ｶ゛ﾏ゛ﾙ゛ #一日ワンチャンアシカﾓﾉﾏﾈチャンス",id)
   fav(status)
  end
 end
@@ -138,7 +144,7 @@ end
 #ぬるぽがっ
 def nurupo(contents,username,status,id)
  if contents =~ /ぬるぽ|ヌルポ|ﾇﾙﾎﾟ/
-  post("#{"@" + username} ｶﾞｯ#{"\u00A0"*rand(5)}", :in_reply_to_status_id => id)
+  reply("#{"@" + username} ｶﾞｯ#{"\u00A0"*rand(5)}",id)
   fav(status)	
  end
 end
@@ -166,7 +172,7 @@ def ramen(contents,username,status,id,name)
     ramen = "蒼"
     menu = ["つけ麺","卵かけつけ麺","海老香味ラーメン","汁なしそば"]
   end
-  post("#{"@" + username} 今日" + name + "さんが食べるラーメンは#{ramen + "の" + menu.sample}です。", :in_reply_to_status_id => id)
+  reply("#{"@" + username} 今日" + name + "さんが食べるラーメンは#{ramen + "の" + menu.sample}です。",id)
   fav(status)
  end
 end
@@ -174,7 +180,7 @@ end
 #ゆーきがブロックされる
 def yuki(contents,username,status,id)
  if contents =~ /ゆーきブロックガチャ/
-  post("#{"@" + username} ゆーきくん(@yu_ki_kun_1)は#{rand(1000)}人にブロックされています。", :in_reply_to_status_id => id)
+  reply("#{"@" + username} ゆーきくん(@yu_ki_kun_1)は#{rand(1000)}人にブロックされています。",id)
   fav(status)
  end
 end
@@ -182,7 +188,7 @@ end
 #うっぱがスパムされる
 def uppa(contents,username,status,id)
  if contents =~ /うっぱスパムしよ/
-  post("#{"@" + username} うっぱは#{rand(1000)}人にブロックされました。", :in_reply_to_status_id => id)
+  reply("#{"@" + username} うっぱは#{rand(1000)}人にブロックされました。",id)
   fav(status)	
  end
 end
@@ -190,7 +196,7 @@ end
 #"Let's fly now"したら"Let's try now"する
 def rimfire(contents,username,status,id)
  if contents =~ /(Let's|let's) (fly|Fly) (now|Now)/
-  post("#{"@" + username} Let's try now#{"！" * rand(1..10)}", :in_reply_to_status_id => id)
+  reply("#{"@" + username} Let's try now#{"！" * rand(1..10)}",id)
  fav(status)
  end
 end
@@ -204,7 +210,7 @@ if contents =~ /今日の(ロデオ|ろでお|RODEO|rodeo|granrodeo|GRANRODEO|�
    count += 1
   end
   open(File.expand_path('../rodeo.txt',__FILE__)) do |f|
-   post("#{"@" + username} 今日あなたにおすすめのGRANRODEOの曲は\n" + f.readlines[rand(count)], :in_reply_to_status_id => id)
+   reply("#{"@" + username} 今日あなたにおすすめのGRANRODEOの曲は\n" + f.readlines[rand(count)],id)
    fav(status)	
   end 
  end
@@ -213,7 +219,7 @@ end
 #ん？今	
 def nandemo(contents,username,status,id)
  if contents =~ /(何|なん)でもする|(なん|何)でもします/
-  post("#{"@" + username} ん？今なんでもするって言ったよね？#{"\u00A0"*rand(5)}", :in_reply_to_status_id => id)
+  reply("#{"@" + username} ん？今なんでもするって言ったよね？#{"\u00A0"*rand(5)}",id)
   fav(status)        
  end
 end
@@ -233,12 +239,12 @@ def namechange(contents,username,status,id)
   if name.length > 20 then
    name = name[0,20]
    @client.update_profile(name: "#{name}")
-   post("#{"@" + username} 今から俺の名前は#{name}だ！", :in_reply_to_status_id => id)
+   reply("#{"@" + username} 今から俺の名前は#{name}だ！",id)
   elsif name.length == 1 then
-   post("#{"@" + username} 短すぎるよぉ…", :in_reply_to_status_id => id)
+   reply("#{"@" + username} 短すぎるよぉ…",id)
   else
    @client.update_profile(name: "#{name}")
-   post("#{"@" + username} 今から俺の名前は#{name}だ！", :in_reply_to_status_id => id)
+   reply("#{"@" + username} 今から俺の名前は#{name}だ！",id)
   end
   fav(status)
  end
@@ -254,7 +260,7 @@ end
 #"現在の名前"に反応して、"はい"とリプライを返す
 def answer(contents,status,username,id)
  if contents =~ /かすかたんbot/
-  post("#{"@" + username} はい#{"\u00A0"*rand(10)}", :in_reply_to_status_id => id)
+  reply("#{"@" + username} はい#{"\u00A0"*rand(10)}",id)
   fav(status)	
  end
 end
@@ -271,12 +277,12 @@ end
 def greet(contents,username,name,id,status)
  if contents =~ /おはよう|起きた|おはよー/
   morn = ["おっはよ〜", "おはよー", "おはようございます", "おはよう", "おはよーございまーす", "おはよ〜"]
-  post("@" + username + " " + morn.sample+"！ " + name + "さん！",:in_reply_to_status_id => id)
+  reply("@" + username + " " + morn.sample+"！ " + name + "さん！",id)
   fav(status)
  end
  if contents =~ /寝る|おやすみ/
   morn = ["おやすみ〜", "おやすみ", "おやすみなさい", "おやすみです", "今日はもう寝るんですか？", "また明日"]
-  post("@" + username + " " + morn.sample+"！ " + name + "さん！",:in_reply_to_status_id => id)
+  reply("@" + username + " " + morn.sample+"！ " + name + "さん！",id)
   fav(status)	
  end
 end
@@ -287,7 +293,7 @@ def suddenly(contents,username,id,status)
   moji = contents.gsub(/@kasumikobot|　|suddenly|\s/,"")
   n = moji.chomp.bytesize
   w = n/2
-  post("#{"@" + username } \n＿#{"人"*w}＿\n＞　#{moji}　＜\n￣#{"Y^"*w}￣\n", :in_reply_to_status_id => id)
+  reply("#{"@" + username } \n＿#{"人"*w}＿\n＞　#{moji}　＜\n￣#{"Y^"*w}￣\n",id)
  fav(status)
  end
 end
@@ -297,7 +303,7 @@ def lmf(contents,username,id,status)
  if contents =~ /Light my fire|LMF/
   moji = contents.gsub(/@kasumikobot|　|Light my fire|\s|LMF/,"")
   w = moji.chomp.length
-  post("#{"@" + username } \n🔥#{"🔥"*w}🔥\n🔥#{moji}🔥\n🔥#{"🔥"*w}🔥\n", :in_reply_to_status_id => id)
+  reply("#{"@" + username } \n🔥#{"🔥"*w}🔥\n🔥#{moji}🔥\n🔥#{"🔥"*w}🔥\n",id)
  end
 end
 
@@ -305,21 +311,21 @@ end
 def whattime(contents,username,id,status)
  if contents =~ /(what|What) time/
   clo = Time.now
-  post("#{"@" + username } " + clo.to_s ,:in_reply_to_status_id => id)	
+  reply("#{"@" + username } " + clo.to_s ,id)	
  end
 end
 
 #"Where am I"に反応してUserのlocationを返す
 def wherei(contents,username,locate,id)
  if contents =~ /(where|Where) am I/
-  post("#{"@" + username } " + locate ,:in_reply_to_status_id => id)
+  reply("#{"@" + username } " + locate ,id)
  end
 end
 
 #"Who am I"に反応してUserのnameを返す
 def whoi(contents,username,name,id)
  if contents =~ /(who|Who) am I/
-  post("#{"@" + username } " + name ,:in_reply_to_status_id => id)
+  reply("#{"@" + username } " + name ,id)
  end
 end
 
@@ -329,9 +335,9 @@ def cointoss(contents,username,id)
   coin = rand(1..2)
   case coin
    when 1 then
-    post("#{"@" + username} 表です。 #{"\u00A0"*rand(5)}" ,:in_reply_to_status_id => id)
+    reply("#{"@" + username} 表です。 #{"\u00A0"*rand(5)}" ,id)
    when 2 then
-    post("#{"@" + username} 裏です。 #{"\u00A0"*rand(5)}" ,:in_reply_to_status_id => id)
+    reply("#{"@" + username} 裏です。 #{"\u00A0"*rand(5)}" ,id)
   end
  end
 end
@@ -370,8 +376,8 @@ end
 #ｾｯｸｽ
 def sex(contents,username,id,status)
  if contents =~ /ｾｯ/
-  arr = ["ｸｽ","ﾌﾟｸ","ｶｲ","ｺｳ","ｸﾂ","ﾍﾟﾝ","ﾃﾝ","ｹﾝ"]
-  post(arr.sample+" RT @"+username+": "+contents,:in_reply_to_status_id => id)
+  arr = ["ｸｽ","ﾌﾟｸ","ｶｲ","ｺｳ","ｸﾂ","ﾍﾟﾝ","ﾃﾝ","ｹﾝ","ﾌﾟﾝ","ｶﾝ","ﾄｳ","ﾃｲ","ｸｽ"]
+  reply(arr.sample+" RT @"+username+": "+contents,id)
  end
 end
 
