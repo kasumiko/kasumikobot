@@ -387,3 +387,26 @@ def earthquake(contents,username,status)
   post("ウーッ！ウーッ！ウーッ！ 緊急事態発生！緊急事態発生！ 直ちにちんちんを格納してください！ ウーッ！ウーッ！ウーッ！ 緊急事態発生！緊急事態発生！ 直ちにちんちんを格納してください！ ウーッ！ウーッ！ウーッ！")
  end
 end
+
+#今日のペルソナ
+def persona(contents,username,id)
+ if contents =~ /ペルソナ！|ペルソナッ！|カッ！|ｶｯ!|ﾍﾟﾙｿﾅ!|ﾍﾟﾙｿﾅｯ!/
+  count = 0
+  fp = open(File.expand_path('../persona/arcana.txt',__FILE__))
+  while fp.gets
+   count += 1
+   num = rand(count)
+  end
+  file = "../persona/#{num}"
+  count2 = 0
+  ft = open(File.expand_path(file,__FILE__))
+  while ft.gets
+   count2 += 1
+  end
+  open(File.expand_path('../persona/arcana.txt',__FILE__)) do |f|
+   open(File.expand_path(file,__FILE__)) do |p|
+    reply("#{"@" + username} \n\n#{f.readlines[num]} \n#{p.readlines[rand(count2)]}",id)
+   end
+  end
+ end
+end

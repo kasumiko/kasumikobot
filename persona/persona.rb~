@@ -1,0 +1,39 @@
+# -*- coding: utf-8 -*-
+Plugin.create :persona do
+  on_appear do |ms|
+    ms.each do |m|
+if Time.now - m.message[:created] < 5 then
+unless m.from_me?() then
+#今日のペルソナ
+if m.message.to_s =~ /ペルソナ！|ペルソナッ！|カッ！|ｶｯ!|ﾍﾟﾙｿﾅ!|ﾍﾟﾙｿﾅｯ!/
+m.favorite
+
+count = 0
+fp = open(File.expand_path('../arcana.txt',__FILE__))
+while fp.gets
+count += 1
+end
+
+num = rand(count)
+
+file = "../#{num}"
+
+count2 = 0
+ft = open(File.expand_path(file,__FILE__))
+while ft.gets
+count2 += 1
+end
+
+open(File.expand_path('../arcana.txt',__FILE__)) do |f|
+
+open(File.expand_path(file,__FILE__)) do |p|
+Service.primary.post(:message => "#{"@" + m.user.idname} \n\n#{f.readlines[num]} \n#{p.readlines[rand(count2)]}", :replyto => m)
+        end
+end
+
+end
+end
+end
+end
+end
+end
