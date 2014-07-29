@@ -6,12 +6,12 @@ require 'tweetstream'
 require '~/document/kasumikobot/userconf.rb'
  
 follower_ids = []
-@client.follower_ids(USERNAME).each do |id|
+@client.follower_ids(@kasumikobot).each do |id|
   follower_ids.push(id)
 end
  
 friend_ids = []
-@client.friend_ids(USERNAME).each do |id|
+@client.friend_ids(@kasumikobot).each do |id|
   friend_ids.push(id)
 end
  
