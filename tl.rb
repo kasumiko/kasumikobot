@@ -51,6 +51,7 @@ Streamclient.userstream do |status|
   sex(contents,username,id,status)
   earthquake(contents,username,status)
   persona(contents,username,id)
+  zanpakutou(contents,username,status,id)
 
   if /@kasumikobot/.match(status.text) #自分へのメンションであれば
    suddenly(contents,username,id,status)

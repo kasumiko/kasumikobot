@@ -267,7 +267,7 @@ end
 
 #人の顔が見たい
 def fx(contents,username,id,status)
- if contents =~ /の顔が見たいよ/
+ if contents =~ /の顔が(見|み)たいよ/
   @client.update_with_media("#{"@" + username}", open(File.expand_path("../pic#{rand(1..2)}.png",__FILE__)), :in_reply_to_status_id => id)
   fav(status)
  end
@@ -408,5 +408,20 @@ def persona(contents,username,id)
     reply("#{"@" + username} \n\n#{f.readlines[num]} \n#{p.readlines[rand(count2)]}",id)
    end
   end
+ end
+end
+
+#今日の斬魄刀
+def zanpakutou(contents,username,status,id)	
+if contents =~ /今日の斬魄刀/
+ count = 0
+ fp = open(File.expand_path('../zanpaku.txt',__FILE__))
+  while fp.gets
+   count += 1
+  end
+  open(File.expand_path('../zanpaku.txt',__FILE__)) do |f|
+   reply("#{"@" + username} \n" + f.readlines[rand(count)],id)
+   fav(status)
+  end 
  end
 end
