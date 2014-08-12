@@ -9,11 +9,17 @@ def reply(post,id)
 @client.update(post,:in_reply_to_status_id => id)
 end
 
-
 #favる
 def fav(status)
 @client.favorite(status)
 end
+
+#カウンタ
+def counter(contents)
+ if contents =~ /カウント/
+ db=PStore
+ end
+end 
 
 #ハピクレ
 def happy(contents,username,status,id)
@@ -67,7 +73,7 @@ end
 
 #野中藍ガチャ
 def aipon(contents,username,status,id)
- if contents =~ /((のなか|あい|野中|藍)(のなか|あい|野中|藍)|あいぽん)ガチャ/
+ if contents =~ /((のなか|あい|野中|藍)(のなか|あい|野中|藍)|あいぽん|アイポン|ｱｲﾎﾟﾝ)(ガチャ|がちゃ)/
   actor = "aipon"
  sayyou(actor,username,id,status)
  end

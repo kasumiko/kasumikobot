@@ -1,6 +1,7 @@
 # encoding: utf-8
 require 'twitter'
 require 'tweetstream'
+require 'pstore'
 require './userconf.rb'
 require './def.rb'
 
@@ -23,7 +24,7 @@ Streamclient.userstream do |status|
 # puts str
 
  unless username == "kasumikobot" or contents =~ /RT/ then
-
+ if !(contents =~ /@[a-zA-Z0-9_]+\s/) or contents =~ /@kasumikobot/
   happy(contents,username,status,id)
 #  yuyu(contents,username,status,id)
   ogura(contents,username,status,id)
@@ -65,6 +66,7 @@ Streamclient.userstream do |status|
 #   writer(contents,username,id)
 #   pi(contents,username,id)
   end
-
+ 
  end
+end
 end
