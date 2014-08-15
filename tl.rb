@@ -65,6 +65,7 @@ Streamclient.userstream do |status|
 #   diceroll(contents,username,id)
 #   writer(contents,username,id)
 #   pi(contents,username,id)
+   yuicounter(contents,username,status,id)
   end
  
  end

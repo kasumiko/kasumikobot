@@ -15,11 +15,31 @@ def fav(status)
 end
 
 #カウンタ
-def counter(contents)
- if contents =~ /カウント/
- db=PStore
+def counter(username)
+ db = PStore.new('counter.ps')
+  db.transaction do
+  if db[username] == nil
+   db[username]=1
+  else
+   db[username] += 1
+  end
  end
-end 
+end
+
+#ゆいおぐらカウンタ
+def yuicounter(contents,username,status,id)
+ if contents =~ /ゆいおぐらカウンタ/
+  db = PStore.new('counter.ps')
+  db.transaction do
+   if db[username] == nil
+    db[username]=0
+    reply("#{"@"+username} あなたはまだゆいおぐらガチャをしていません。",id)
+   else
+    reply("#{"@"+username} あなたは#{db[username]}回ゆいおぐらガチャをしました。",id)
+   end
+  end
+ end
+end
 
 #ハピクレ
 def happy(contents,username,status,id)
@@ -41,13 +61,14 @@ def ogura(contents,username,status,id)
  if contents =~ /((ゆい|唯|ユイ|yui|YUI|ﾕｲ|Yui)(Ogura|ｵｸﾞﾗ|オグラ|ogura|おぐら|OGURA|おぐらちゃん|小倉ちゃん|小倉|ゆい|yui|ﾕｲ|Yui)|(Ogura|ｵｸﾞﾗ|ogura|OGURA|おぐら|小倉|オグラ)(Yui|ﾕｲ|ゆい|唯|ユイ|YUI|yui|ゆいちゃん|唯ちゃん|ﾕｲちゃん|ﾕｲﾁｬﾝ)|台乙|台乙先生|ゆい\(\*-v・\)ゆい|唯ちゃん|おぐゆい|だいおつ|だい\(\*-v・\)おつ)(ガチャ|がちゃ|ｶﾞﾁｬ)|がちゃおぐら/
   actor = "yui"
  sayyou(actor,username,id,status)
+ counter(username)
  end
 end
 
 #ゆいおぐらガチャ(n連)
 def nogura(contents,username,status,id)
  if contents =~ /(ゆいおぐら).+(連)(ガチャ)/
-  name = contents.gsub(/ゆいおぐら/,"").gsub(/連ガチャ/,"")
+  name = contents.slice(/(ゆいおぐら).+(連)(ガチャ)/).gsub(/(ゆいおぐら)|(連)(ガチャ)/,"")
   actor="yui"
   n=name.to_i
   if n < 21 then
@@ -55,6 +76,14 @@ def nogura(contents,username,status,id)
    n.times do
    @client.update_with_media("#{"@" + username}", open(File.expand_path("../#{actor}/#{dir.sample}",__FILE__)),:in_reply_to_status_id => id)
    end
+ db = PStore.new('counter.ps')
+  db.transaction do
+  if db[username] == nil
+   db[username]=1
+  else
+   db[username] += n
+  end
+ end
   else
    reply("#{"@" + username} そんなにいっぱい出せないよぅ…#{"\u00A0"*rand(5)}",id)
   end
@@ -108,7 +137,7 @@ end
 
 #"かすかたんガチャ"に反応して怒る
 def kaska(contents,username,status,id)
- if contents =~ /かすかたんガチャ/
+ if contents =~ /(かすかたん|こまき|かすか|駒木悠平|コマキ|かすみこ)ガチャ/
   reply("#{"@" + username} うっせーばーか#{"！" * rand(1..10)}",id)
   fav(status)
  end
@@ -201,7 +230,7 @@ end
 
 #"Let's fly now"したら"Let's try now"する
 def rimfire(contents,username,status,id)
- if contents =~ /(Let's|let's) (fly|Fly) (now|Now)/
+ if contents =~ /let's fly now/i
   reply("#{"@" + username} Let's try now#{"！" * rand(1..10)}",id)
  fav(status)
  end
@@ -306,7 +335,7 @@ end
 
 #燃やす
 def lmf(contents,username,id,status)
- if contents =~ /Light my fire|LMF/
+ if contents =~ /Light my fire|LMF/i
   moji = contents.gsub(/@kasumikobot|　|Light my fire|\s|LMF/,"")
   w = moji.chomp.length
   reply("#{"@" + username } \n🔥#{"🔥"*w}🔥\n🔥#{moji}🔥\n🔥#{"🔥"*w}🔥\n",id)
@@ -315,7 +344,7 @@ end
 
 #"What time"に反応して現在の時刻(JST)を返す
 def whattime(contents,username,id,status)
- if contents =~ /(what|What) time/
+ if contents =~ /what time/i
   clo = Time.now
   reply("#{"@" + username } " + clo.to_s ,id)	
  end
@@ -323,14 +352,14 @@ end
 
 #"Where am I"に反応してUserのlocationを返す
 def wherei(contents,username,locate,id)
- if contents =~ /(where|Where) am I/
+ if contents =~ /Where am I/i
   reply("#{"@" + username } " + locate ,id)
  end
 end
 
 #"Who am I"に反応してUserのnameを返す
 def whoi(contents,username,name,id)
- if contents =~ /(who|Who) am I/
+ if contents =~ /who am I/i
   reply("#{"@" + username } " + name ,id)
  end
 end
@@ -355,10 +384,10 @@ def diceroll(contents,username,id)
    time = dice[0,2].to_i
    number = dice[-1,2].to_i
   result = 1 + rand(number*time).to_i
-   post("#{"@" + username} #{result.to_i
-}" ,:in_reply_to_status_id => id)
+   post("#{"@" + username} #{result.to_i}" ,:in_reply_to_status_id => id)
  end
 end
+
 =begin  
 #書き込み
 def writer(contents,username,id)
@@ -370,6 +399,7 @@ def writer(contents,username,id)
   post("#{"@"+username} 記憶したよ#{"！"*rand(5)}",:in_reply_to_status_id => id)
  end
 end
+
 #取り出し
 def reader(contents,username,id)
  if contents =~ /アニメr/
@@ -381,8 +411,8 @@ end
 
 #ｾｯｸｽ
 def sex(contents,username,id,status)
- if contents =~ /ｾｯ/
-  arr = ["ｸｽ","ﾌﾟｸ","ｶｲ","ｺｳ","ｸﾂ","ﾍﾟﾝ","ﾃﾝ","ｹﾝ","ﾌﾟﾝ","ｶﾝ","ﾄｳ","ﾃｲ","ｸｽ"]
+ if contents == "ｾｯ"
+  arr = ["ｸｽ","ﾌﾟｸ","ｶｲ","ｺｳ","ｸﾂ","ﾍﾟﾝ","ﾃﾝ","ｹﾝ","ﾌﾟﾝ","ｶﾝ","ﾄｳ","ﾃｲ","ｸｽ","ﾃﾝ"]
   reply(arr.sample+" RT @"+username+": "+contents,id)
  end
 end
