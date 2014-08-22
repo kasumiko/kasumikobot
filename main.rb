@@ -4,6 +4,7 @@ require 'tweetstream'
 require 'pstore'
 require './userconf.rb'
 require './def.rb'
+require './func.rb'
 
 myname = @client.user.name
 mes = myname+ " is active..."
@@ -53,6 +54,7 @@ Streamclient.userstream do |status|
   earthquake(contents,username,status)
   persona(contents,username,id)
   zanpakutou(contents,username,status,id)
+#  calc(contents,username,status,id)
 
   if /@kasumikobot/.match(status.text) #自分へのメンションであれば
    suddenly(contents,username,id,status)
