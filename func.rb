@@ -261,11 +261,13 @@ def namechange(contents,username,status,id)
    name = name[0,20]
    @client.update_profile(name: "#{name}")
    reply("#{"@" + username} 今から俺の名前は#{name}だ！",id)
+   @myname = name
   elsif name.length == 1 then
    reply("#{"@" + username} 短すぎるよぉ…",id)
   else
    @client.update_profile(name: "#{name}")
    reply("#{"@" + username} 今から俺の名前は#{name}だ！",id)
+   @myname = name
   end
   fav(status)
  end
@@ -280,7 +282,7 @@ end
 	
 #"現在の名前"に反応して、"はい"とリプライを返す
 def answer(contents,status,username,id)
- if contents =~ /かすかたんbot/
+ if contents =~ /かすかたんbot|#{@myname}/
   reply("#{"@" + username} はい#{"\u00A0"*rand(10)}",id)
   fav(status)	
  end
@@ -456,3 +458,33 @@ def calc(contents,username,status,id)
  end
 end
 =end
+
+#ゆいおぐらランク
+def ranker(contents,username,status,id)
+ if contents =~ /ゆいおぐらランク|ゆいおぐらんく/
+  rank = PStore.new('ranker.ps')
+  rank.transaction do
+   if rank[username] == nil
+    reply("#{"@"+username} あなたはまだゆいおぐらガチャをしていません。",id)
+   else
+    reply("#{"@"+username} あなたはゆいおぐらんく#{rank[username]}位です！",id)
+   end
+  end
+  fav(status)
+ end
+end
+
+#出席管理
+def school_attend(contents,username,status,id)
+ if contents =~ /月曜１限/
+  attend = PStore.new('attend.ps')
+  attend.transaction do
+   if attend[username] == nil
+    reply("#{"@"+username} あなたはまだゆいおぐらガチャをしていません。",id)
+   else
+    reply("#{"@"+username} あなたはゆいおぐらんく#{rank[username]}位です！",id)
+   end
+  end
+  fav(status)
+ end
+end

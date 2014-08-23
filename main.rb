@@ -6,8 +6,8 @@ require './userconf.rb'
 require './def.rb'
 require './func.rb'
 
-myname = @client.user.name
-mes = myname+ " is active..."
+@myname = @client.user.name
+mes = @myname+ " is active..."
 puts mes
 post(mes)
 
@@ -42,11 +42,11 @@ Streamclient.userstream do |status|
   uppa(contents,username,status,id)
   rimfire(contents,username,status,id)
   rodeo(contents,username,status,id)
+  answer(contents,status,username,id)
   nandemo(contents,username,status,id)
 #  yo
   namechange(contents,username,status,id)
   favre(contents,status)
-  answer(contents,status,username,id)
   fx(contents,username,id,status)
   greet(contents,username,name,id,status) 
   aipon(contents,username,status,id)
@@ -55,6 +55,7 @@ Streamclient.userstream do |status|
   persona(contents,username,id)
   zanpakutou(contents,username,status,id)
 #  calc(contents,username,status,id)
+
 
   if /@kasumikobot/.match(status.text) #自分へのメンションであれば
    suddenly(contents,username,id,status)
@@ -68,6 +69,7 @@ Streamclient.userstream do |status|
 #   writer(contents,username,id)
 #   pi(contents,username,id)
    yuicounter(contents,username,status,id)
+   ranker(contents,username,status,id)
   end
  
  end
