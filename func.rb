@@ -473,18 +473,3 @@ def ranker(contents,username,status,id)
   fav(status)
  end
 end
-
-#出席管理
-def school_attend(contents,username,status,id)
- if contents =~ /月曜１限/
-  attend = PStore.new('attend.ps')
-  attend.transaction do
-   if attend[username] == nil
-    reply("#{"@"+username} あなたはまだゆいおぐらガチャをしていません。",id)
-   else
-    reply("#{"@"+username} あなたはゆいおぐらんく#{rank[username]}位です！",id)
-   end
-  end
-  fav(status)
- end
-end

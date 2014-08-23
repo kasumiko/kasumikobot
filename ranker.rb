@@ -17,7 +17,6 @@ db.transaction do
   datus.each{|n|
    rank[n[0]]=n[2]
   }
-pp rank["Kasu_miko"]
  end
 end
 

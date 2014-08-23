@@ -5,6 +5,7 @@ require 'pstore'
 require './userconf.rb'
 require './def.rb'
 require './func.rb'
+require './attend.rb'
 
 @myname = @client.user.name
 mes = @myname+ " is active..."
@@ -70,6 +71,8 @@ Streamclient.userstream do |status|
 #   pi(contents,username,id)
    yuicounter(contents,username,status,id)
    ranker(contents,username,status,id)
+   school_attend(contents,username,id,status)
+   attend_checker(contents,username,status,id)
   end
  
  end
