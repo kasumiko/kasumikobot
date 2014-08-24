@@ -6,6 +6,7 @@ require './userconf.rb'
 require './def.rb'
 require './func.rb'
 require './attend.rb'
+require './gacha.rb'
 
 @myname = @client.user.name
 mes = @myname+ " is active..."
