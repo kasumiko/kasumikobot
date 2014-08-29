@@ -2,7 +2,7 @@
 # encoding: utf-8
 require'pstore'
 require'pp'
-db = PStore.new('~/document/kasumikobot/counter.ps')
+db = PStore.new(File.expand_path('../counter.ps',__FILE__))
 db.transaction do
  data = Hash::new
  db.roots.each{|i|
@@ -13,7 +13,7 @@ db.transaction do
   m << data.sort_by{|key,val| val}.index(m)+1
   datus << m
  }
- rank = PStore.new('~/document/kasumikobot/ranker.ps')
+ rank = PStore.new(File.expand_path('../ranker.ps',__FILE__))
  rank.transaction do
   datus.each{|n|
    rank[n[0]]=n[2]
