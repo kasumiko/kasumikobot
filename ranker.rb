@@ -10,7 +10,7 @@ db.transaction do
  }
  datus = []
  data.sort_by{|key,val| val}.each{|m|
-  m << data.sort_by{|key,val| val}.index(m)+1
+  m << data.sort_by{|key,val| -val}.index(m)+1
   datus << m
  }
  rank = PStore.new(File.expand_path('../ranker.ps',__FILE__))
