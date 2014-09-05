@@ -3,12 +3,11 @@ require'pstore'
 require'pp'
 #出席管理
 def school_attend(contents,username,id,status)
-if contents =~ /attend/
-contents = contents.gsub(/@kasumikobot attend|\s|　/,"")
+contents = contents.gsub(/@kasumikobot|\s|　/,"").tr('１-９','1-9')
  attend = PStore.new('attend.ps')
  attend.transaction do
   if attend[username] == nil
-   attend[username] = [[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],],[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],],[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],],[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],],[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],],[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],]]
+   attend[username]=[[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],],[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],],[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],],[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],],[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],],[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],],]
   end
   i,j,k = nil
   case contents[0,2]
@@ -48,14 +47,13 @@ contents = contents.gsub(/@kasumikobot attend|\s|　/,"")
  attend[username][i][j][k] += 1
  end
 end
-end
 #見る
 def attend_checker(contents,username,status,id)
- if contents =~ /出席管理/
  attend = PStore.new('attend.ps')
  attend.transaction do
   if attend[username] == nil
-   attend[username] = [[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],],[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],],[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],],[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],],[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],],[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],]]
+   attend[username]=[[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],],[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],],[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],],[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],],[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],],[[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],],]
+
   end
 contents = contents.gsub(/@kasumikobot 出席管理|\s|　/,"")
   case contents[0,2]
@@ -73,5 +71,4 @@ contents = contents.gsub(/@kasumikobot 出席管理|\s|　/,"")
 cont = "#{"@"+username} あなたの#{contents[0,2]}の出席情報です。\n1限 #{attend[username][i][0][0]}出席 #{attend[username][i][0][1]}欠席 #{attend[username][i][0][2]}休講\n2限 #{attend[username][i][1][0]}出席 #{attend[username][i][1][1]}欠席 #{attend[username][i][1][2]}休講\n3限 #{attend[username][i][2][0]}出席 #{attend[username][i][2][1]}欠席 #{attend[username][i][2][2]}休講\n4限 #{attend[username][i][3][0]}出席 #{attend[username][i][3][1]}欠席 #{attend[username][i][3][2]}休講\n5限 #{attend[username][i][4][0]}出席 #{attend[username][i][4][1]}欠席 #{attend[username][i][4][2]}休講\n6限 #{attend[username][i][5][0]}出席 #{attend[username][i][5][1]}欠席 #{attend[username][i][5][2]}休講\n"
 reply(cont,id)
  end
-end
 end

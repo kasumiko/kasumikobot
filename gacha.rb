@@ -8,17 +8,14 @@ def sayyou(actor,username,id,status)
 end
 
 #ゆいおぐらガチャ
-def ogura(contents,username,status,id)
- if contents =~ /((ゆい|唯|ユイ|yui|YUI|ﾕｲ|Yui)(Ogura|ｵｸﾞﾗ|オグラ|ogura|おぐら|OGURA|おぐらちゃん|小倉ちゃん|小倉|ゆい|yui|ﾕｲ|Yui)|(Ogura|ｵｸﾞﾗ|ogura|OGURA|おぐら|小倉|オグラ)(Yui|ﾕｲ|ゆい|唯|ユイ|YUI|yui|ゆいちゃん|唯ちゃん|ﾕｲちゃん|ﾕｲﾁｬﾝ)|台乙|台乙先生|ゆい\(\*-v・\)ゆい|唯ちゃん|おぐゆい|だいおつ|だい\(\*-v・\)おつ)(ガチャ|がちゃ|ｶﾞﾁｬ)|がちゃおぐら/
+def ogura(username,status,id)
   actor = "yui"
  sayyou(actor,username,id,status)
  counter(username)
- end
 end
 
 #ゆいおぐらガチャ(n連)
 def nogura(contents,username,status,id)
- if contents =~ /(ゆいおぐら).+(連)(ガチャ)/
   mem =PStore.new('memory.ps')
   mem.transaction do
    if mem[username] == nil
@@ -46,23 +43,19 @@ def nogura(contents,username,status,id)
     reply("#{"@" + username} 引きすぎは身体にわるいよ？#{"\u00A0"*rand(5)}",id)
    end
   end
- end
 end
+
 #ゆいおぐらガチャ(応援)
-def cheerogura(contents,username,status,id)
- if contents =~ /もう(ダメ|だめ)だ/
+def cheerogura(username,status,id)
   dir = Dir.entries("./yui").sample
   @client.update_with_media("#{"@" + username} がんばって！", open(File.expand_path("../yui/#{dir}",__FILE__)),:in_reply_to_status_id => id)    
    fav(status)   
- end
 end 
 
 #野中藍ガチャ
-def aipon(contents,username,status,id)
- if contents =~ /((のなか|あい|野中|藍)(のなか|あい|野中|藍)|あいぽん|アイポン|ｱｲﾎﾟﾝ)(ガチャ|がちゃ)/
+def aipon(username,status,id)
   actor = "aipon"
  sayyou(actor,username,id,status)
- end
 end
 
 #カウンタ
@@ -78,8 +71,7 @@ def counter(username)
 end
 
 #ゆいおぐらカウンタ
-def yuicounter(contents,username,status,id)
- if contents =~ /ゆいおぐらカウンタ/
+def yuicounter(username,status,id)
   db = PStore.new('counter.ps')
   db.transaction do
    if db[username] == nil
@@ -89,13 +81,11 @@ def yuicounter(contents,username,status,id)
     reply("#{"@"+username} あなたは#{db[username]}回ゆいおぐらガチャをしました。",id)
    end
   end
- end
 end
 
 
 #ゆいおぐらランク
-def ranker(contents,username,status,id)
- if contents =~ /ゆいおぐらランク|ゆいおぐらんく/
+def ranker(username,status,id)
   rank = PStore.new('ranker.ps')
   rank.transaction do
    if rank[username] == nil
@@ -105,5 +95,4 @@ def ranker(contents,username,status,id)
    end
   end
   fav(status)
- end
 end
