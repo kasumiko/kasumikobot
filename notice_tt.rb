@@ -4,9 +4,9 @@ require '~/document/kasumikobot/userconf.rb'
 require 'twitter'
 
 i = nil
-if Time.now.wday === 1..5
+
 i = Time.now.wday-1
-end
+
 i = 0
 tt = PStore.new('timetable.ps')
 tt.transaction do
