@@ -1,6 +1,6 @@
 # encoding: utf-8
 require'pstore'
-require './userconf.rb'
+require '~/document/kasumikobot/userconf.rb'
 require 'twitter'
 
 i = nil
