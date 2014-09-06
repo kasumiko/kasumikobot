@@ -57,8 +57,8 @@ Streamclient.userstream do |status|
    rodeo(username,status,id)
   elsif contents =~ /(何|なん)でもする|(なん|何)でもします/
    nandemo(username,status,id)
-  elsif contents =~ /\(@kasumikobot\)/
-   namechange(contents,username,status,id)
+#  elsif contents =~ /\(@kasumikobot\)/
+#   namechange(contents,username,status,id)
   elsif contents =~ /の顔が(見|み)たいよ/
    fx(username,id,status)
   elsif contents =~ /let's fly now/i
@@ -81,12 +81,11 @@ Streamclient.userstream do |status|
   favre(status)
   elsif contents =~ /(かすかたん|かすみこ)bot|#{@myname}/
   answer(status,username,id)
-  end
 #  yuyu(contents,username,status,id)  
 #  raise(contents,username,status,id)
 #  yo
 #  calc(contents,username,status,id)
-  if /@kasumikobot/.match(status.text) #自分へのメンションであれば 
+  elsif /@kasumikobot/.match(status.text) #自分へのメンションであれば 
    if contents =~ /ゆいおぐらカウンタ/
     yuicounter(username,status,id)
    elsif contents =~ /ゆいおぐら(ランク|らんく)|ゆいおぐ(らんく|ランク)/

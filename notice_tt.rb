@@ -8,7 +8,7 @@ i = nil
 i = Time.now.wday-1
 
 i = 0
-tt = PStore.new('timetable.ps')
+tt = PStore.new('~/document/kasumikobot/timetable.ps')
 tt.transaction do
  tt.roots.each{|username|
  post = "@#{username}\n今日の時間割です。"
