@@ -5,7 +5,7 @@ require'pp'
 def timetable_add(contents,username,id)
  
 begin
-  contents =contents.gsub(/@kasumikobot|ttadd|科目|\s|　/,"").gsub(/教室|曜|限|、|，/,",").split(",")
+  contents =contents.gsub(/@kasumikobot|ttadd|科目|\s|　/,"").gsub(/教室|曜|限|、|，/,",").tr(１-６,1-6).split(",")
   timetable = PStore.new('timetable.ps')
   timetable.transaction do
    if timetable[username] == nil
