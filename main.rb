@@ -29,97 +29,100 @@ Streamclient.userstream do |status|
 
  unless username == "kasumikobot" or contents =~ /RT/ then
  if !(contents =~ /@[a-zA-Z0-9_]+\s/) or contents =~ /@kasumikobot/
-  if contents =~ /((ゆい|唯|ユイ|yui|YUI|ﾕｲ|Yui)(Ogura|ｵｸﾞﾗ|オグラ|ogura|おぐら|OGURA|おぐらちゃん|小倉ちゃん|小倉|ゆい|yui|ﾕｲ|Yui)|(Ogura|ｵｸﾞﾗ|ogura|OGURA|おぐら|小倉|オグラ)(Yui|ﾕｲ|ゆい|唯|ユイ|YUI|yui|ゆいちゃん|唯ちゃん|ﾕｲちゃん|ﾕｲﾁｬﾝ)|台乙|台乙先生|ゆい\(\*-v・\)ゆい|唯ちゃん|おぐゆい|だいおつ|だい\(\*-v・\)おつ)(ガチャ|がちゃ|ｶﾞﾁｬ)|がちゃおぐら/
+  case contents
+  when /((ゆい|唯|ユイ|yui|YUI|ﾕｲ|Yui)(Ogura|ｵｸﾞﾗ|オグラ|ogura|おぐら|OGURA|おぐらちゃん|小倉ちゃん|小倉|ゆい|yui|ﾕｲ|Yui)|(Ogura|ｵｸﾞﾗ|ogura|OGURA|おぐら|小倉|オグラ)(Yui|ﾕｲ|ゆい|唯|ユイ|YUI|yui|ゆいちゃん|唯ちゃん|ﾕｲちゃん|ﾕｲﾁｬﾝ)|台乙|台乙先生|ゆい\(\*-v・\)ゆい|唯ちゃん|おぐゆい|だいおつ|だい\(\*-v・\)おつ)(ガチャ|がちゃ|ｶﾞﾁｬ)|がちゃおぐら/
    ogura(username,status,id)
-  elsif contents =~ /(ゆいおぐら).+(連)(ガチャ)/
+  when /(ゆいおぐら).+(連)(ガチャ)/
    nogura(contents,username,status,id)
-  elsif contents =~ /もう(ダメ|だめ)だ/
+  when /もう(ダメ|だめ)だ/
    cheerogura(username,status,id)
-  elsif contents =~ /((のなか|あい|野中|藍)(のなか|あい|野中|藍)|あいぽん|アイポン|ｱｲﾎﾟﾝ)(ガチャ|がちゃ|ｶﾞﾁｬ)/
+  when /((のなか|あい|野中|藍)(のなか|あい|野中|藍)|あいぽん|アイポン|ｱｲﾎﾟﾝ)(ガチャ|がちゃ|ｶﾞﾁｬ)/
    aipon(username,status,id)
-  elsif contents =~ /(出席|欠席)(ガチャ|がちゃ)/
+  when /(出席|欠席)(ガチャ|がちゃ)/
    attend(username,status,id,name)
-  elsif contents =~ /(かすかたん|こまき|かすか|駒木悠平|コマキ|かすみこ)(ガチャ|がちゃ|ｶﾞﾁｬ)/
+  when /(かすかたん|こまき|かすか|駒木悠平|コマキ|かすみこ)(ガチャ|がちゃ|ｶﾞﾁｬ)/
    kaska(username,status,id)
-  elsif contents =~ /(土橋|どばし|ゆめひかり|土橋輝|ドバシ)(ガチャ|がちゃ|ｶﾞﾁｬ)/
+  when /(土橋|どばし|ゆめひかり|土橋輝|ドバシ)(ガチャ|がちゃ|ｶﾞﾁｬ)/
    yumehikari(username,status,id)
-  elsif contents =~ /今日のアルカナ/
+  when /今日のアルカナ/
    arcana(username,status,id,name)
-  elsif contents =~ /ぬるぽ|ヌルポ|ﾇﾙﾎﾟ/
+  when /ぬるぽ|ヌルポ|ﾇﾙﾎﾟ/
    nurupo(username,status,id)
-  elsif contents =~ /ラーメン食べたい/
+  when /ラーメン食べたい/
    ramen(username,status,id,name)
-  elsif contents =~ /ゆーきブロックガチャ/
+  when /ゆーきブロックガチャ/
    yuki(username,status,id)
-  elsif contents =~ /うっぱスパムしよ/
+  when /うっぱスパムしよ/
    uppa(username,status,id)
-  elsif contents =~ /今日の(ロデオ|ろでお|RODEO|rodeo|granrodeo|GRANRODEO|グランロデオ|ｸﾞﾗﾝﾛﾃﾞｵ|GR|グラロデ|ぐらろで|ｸﾞﾗﾛﾃﾞ|KISHOW|kishow|e-ZUKA|e-zuka|val|VAL|たきた|瀧田)/
+  when /今日の(ロデオ|ろでお|RODEO|rodeo|granrodeo|GRANRODEO|グランロデオ|ｸﾞﾗﾝﾛﾃﾞｵ|GR|グラロデ|ぐらろで|ｸﾞﾗﾛﾃﾞ|KISHOW|kishow|e-ZUKA|e-zuka|val|VAL|たきた|瀧田)/
    rodeo(username,status,id)
-  elsif contents =~ /(何|なん)でもする|(なん|何)でもします/
+  when /(何|なん)でもする|(なん|何)でもします/
    nandemo(username,status,id)
-#  elsif contents =~ /\(@kasumikobot\)/
+#  when /\(@kasumikobot\)/
 #   namechange(contents,username,status,id)
-  elsif contents =~ /の顔が(見|み)たいよ/
+  when /の顔が(見|み)たいよ/
    fx(username,id,status)
-  elsif contents =~ /let's fly now/i
+  when /let's fly now/i
    rimfire(username,status,id)
-  elsif contents =~ /ハッピークレセント|ハピクレ/	
+  when /ハッピークレセント|ハピクレ/	
    happy(username,status,id)
-  elsif contents =~ /おはよ|起きた/
+  when /おはよ|起きた/
    morn(username,name,id,status)
-  elsif contents =~ /寝る|おやすみ/
+  when /寝る|おやすみ/
    night(username,name,id,status)
-  elsif contents =~ /ペルソナ！|ペルソナッ！|カッ！|ｶｯ!|ﾍﾟﾙｿﾅ!|ﾍﾟﾙｿﾅｯ!/
+  when /ペルソナ！|ペルソナッ！|カッ！|ｶｯ!|ﾍﾟﾙｿﾅ!|ﾍﾟﾙｿﾅｯ!/
      persona(username,id,status)
-  elsif contents =~ /今日の斬魄刀/
+  when /今日の斬魄刀/
    zanpakutou(username,status,id)
-  elsif contents =~ /ゆれ/
+  when /ゆれ/
    earthquake  
-  elsif contents =~ /ｾｯ/
+  when /ｾｯ/
   sex(username,id,status)
-  elsif contents =~ /ふぁぼれよ/
+  when /ふぁぼれよ/
   favre(status)
-  elsif contents =~ /(かすかたん|かすみこ)bot|#{@myname}/
+  when /(かすかたん|かすみこ)bot|#{@myname}/
   answer(status,username,id)
 #  yuyu(contents,username,status,id)  
 #  raise(contents,username,status,id)
 #  yo
 #  calc(contents,username,status,id)
-  elsif /@kasumikobot/.match(status.text) #自分へのメンションであれば 
-   if contents =~ /ゆいおぐらカウンタ/
-    yuicounter(username,status,id)
-   elsif contents =~ /ゆいおぐら(ランク|らんく)|ゆいおぐ(らんく|ランク)/
-    ranker(username,status,id)
-   elsif contents =~ /.曜.限../
-    school_attend(contents,username,id,status)
-   elsif contents =~ /出席管理/
-    attend_checker(contents,username,status,id)
-   elsif contents =~ /suddenly/
-    suddenly(contents,username,id,status)
-   elsif contents =~ /Light my fire|LMF/i
-    lmf(contents,username,id,status)
-   elsif contents =~ /what time/i
-    whattime(contents,username,id,status)
-   elsif contents =~ /Where am I/i
+  when /@kasumikobot/ #自分へのメンションであれば 
+   case contents
+   when /ゆいおぐらカウンタ/
+    yuicounter(username,id)
+   when /ゆいおぐら(ランク|らんく)|ゆいおぐ(らんく|ランク)/
+    ranker(username,id)
+   when /ttadd/
+    timetable_add(contents,username,id)   
+   when /.曜.限../
+    school_attend(contents,username,id)
+   when /出席管理/
+    attend_checker(contents,username,id)
+   when /ttreset/
+　　　　timetable_resetter(contents,username)
+   when /suddenly/
+    suddenly(contents,username,id)
+   when /Light my fire|LMF/i
+    lmf(contents,username,id)
+   when /what time/i
+    whattime(contents,username,id)
+   when /Where am I/i
     wherei(contents,username,locate,id)
-   elsif contents =~ /who am I/i
+   when /who am I/i
     whoi(contents,username,name,id)
-   elsif contents =~ /コイントス/
+   when /コイントス/
     cointoss(contents,username,id)
-   elsif contents =~ /ttadd/
-   timetable_add(contents,username,id)
-   elsif contents =~ /時間割 .曜/
-   timetable_viewer(contents,username,id)
+   when /時間割 .曜/
+    timetable_viewer(contents,username,id)
    else
-   reply("@#{username + [" それな"," わかる"," せやな"," なるほど"].sample}",id)
+    reply("@#{username + [" それな"," わかる"," せやな"," なるほど"].sample}",id)
    end 
   fav(status)
    
 #   diceroll(contents,username,id)
 #   writer(contents,username,id)
 #   pi(contents,username,id)
-  end
- 
+end
 end
 end
 end

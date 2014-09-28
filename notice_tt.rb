@@ -1,3 +1,4 @@
+#!/usr/local/bin/ruby -Ku
 # encoding: utf-8
 require'pstore'
 require '~/document/kasumikobot/userconf.rb'
