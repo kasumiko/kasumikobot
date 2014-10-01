@@ -72,7 +72,10 @@ contents = contents.gsub(/@kasumikobot 出席管理|\s|　/,"")
   when "金曜"
   i = 4
   end
-cont = "#{"@"+username} あなたの#{contents[0,2]}の出席情報です。\n1限 #{attend[username][i][0][0]}出席 #{attend[username][i][0][1]}欠席 #{attend[username][i][0][2]}遅刻 #{attend[username][i][0][3]}休講\n2限 #{attend[username][i][0][0]}出席 #{attend[username][i][0][1]}欠席 #{attend[username][i][0][2]}遅刻 #{attend[username][i][0][3]}休講\n3限 #{attend[username][i][0][0]}出席 #{attend[username][i][0][1]}欠席 #{attend[username][i][0][2]}遅刻 #{attend[username][i][0][3]}休講\n4限 #{attend[username][i][0][0]}出席 #{attend[username][i][0][1]}欠席 #{attend[username][i][0][2]}遅刻 #{attend[username][i][0][3]}休講\n5限 #{attend[username][i][0][0]}出席 #{attend[username][i][0][1]}欠席 #{attend[username][i][0][2]}遅刻 #{attend[username][i][0][3]}休講\n6限 #{attend[username][i][0][0]}出席 #{attend[username][i][0][1]}欠席 #{attend[username][i][0][2]}遅刻 #{attend[username][i][0][3]}休講\n"
+cont = "#{"@"+username} あなたの#{contents[0,2]}の出席情報です。\n"
+6.times{|n|
+cont += "#{n+1}限 #{attend[username][i][n][0]}出席 #{attend[username][i][n][1]}欠席 #{attend[username][i][n][2]}遅刻 #{attend[username][i][n][3]}休講\n" 
+} 
 reply(cont,id)
  end
 end
